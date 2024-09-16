@@ -1,0 +1,33 @@
+<div class="container mt-4">
+  <!-- Message d'alerte -->
+  <div class="alert alert-danger mt-2" role="alert" *ngIf="errorMsg.length">
+    <p class="p-0 m-0" *ngFor="let msg of errorMsg">{{msg}}</p>
+  </div>
+  <hr>
+
+  <!-- Carte avec formulaire -->
+  <div class="card">
+    <div class="card-header text-center">
+      <h2>Ajouter un département</h2>
+    </div>
+    <div class="card-body">
+      <div class="row justify-content-center">
+        <form class="col-md-8">
+          <!-- Nom du département -->
+          <div class="mb-3">
+            <label for="name" class="form-label">Département</label>
+            <input [(ngModel)]="departementRequest.name" type="text" class="form-control" id="name" name="name"
+                   placeholder="Le nom du département">
+          </div>
+
+          <!-- Bouton Sauvegarder -->
+          <div class="d-flex justify-content-center">
+            <button (click)="saveDepartement()" type="submit" class="btn btn-outline-primary">
+              <i class="fas fa-save"></i>&nbsp;Sauvegarder
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

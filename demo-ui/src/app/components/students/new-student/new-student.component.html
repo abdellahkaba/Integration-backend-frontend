@@ -1,0 +1,61 @@
+<div class="container mt-4">
+
+  <div class="alert alert-danger mt-2" role="alert" *ngIf="errorMsg.length">
+    <p class="p-0 m-0" *ngFor="let msg of errorMsg">{{msg}}</p>
+  </div>
+  <hr>
+  <div class="card">
+    <div class="card-header text-center">
+      <h2>Ajouter un étudiant</h2>
+    </div>
+    <div class="card-body">
+      <div class="row justify-content-center">
+        <form class="col-md-8">
+          <!-- Nom de l'étudiant -->
+          <div class="mb-3">
+            <label for="name" class="form-label">Nom</label>
+            <input [(ngModel)]="studentRequest.name" type="text" class="form-control" id="name" name="name"
+                   placeholder="Nom de l'étudiant">
+          </div>
+
+          <!-- Email de l'étudiant -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input [(ngModel)]="studentRequest.email" type="email" class="form-control" id="email" name="email"
+                   placeholder="Email de l'étudiant">
+          </div>
+
+<!--          &lt;!&ndash; Sélectionner le département &ndash;&gt;-->
+<!--          <div class="mb-3">-->
+<!--            <label for="departementId" class="form-label">Département</label>-->
+<!--            <select [(ngModel)]="studentRequest.departementId" class="form-select" id="departementId" name="departementId">-->
+<!--              <option *ngFor="let departement of departementResponse" [value]="departement.id">{{ departement.name }}</option>-->
+<!--            </select>-->
+<!--          </div>-->
+
+          <div class="mb-3">
+            <label class="form-label">Département</label>
+            <div *ngFor="let departement of departementResponse">
+              <input
+                type="radio"
+                [id]="'departement-' + departement.id"
+                [(ngModel)]="studentRequest.departementId"
+                [value]="departement.id"
+                name="departementId"
+              />
+              <label [for]="'departement-' + departement.id">{{ departement.name }}</label>
+            </div>
+          </div>
+
+
+          <!-- Bouton Sauvegarder -->
+          <div class="d-flex justify-content-center">
+            <button (click)="addStudent()" type="submit" class="btn btn-outline-primary">
+              <i class="fas fa-save"></i>&nbsp;Sauvegarder
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

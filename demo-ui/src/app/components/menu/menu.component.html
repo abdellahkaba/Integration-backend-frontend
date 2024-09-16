@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Demo</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Menu Departements -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-building"></i> Departements
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/departements"><i class="bi bi-list-ul"></i> Liste des Departements</a></li>
+            <li><a class="dropdown-item" routerLink="/new-departement"><i class="bi bi-plus-square"></i> Ajouter un departement</a></li>
+          </ul>
+        </li>
+
+        <!-- Menu Étudiants -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person"></i> Étudiants
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/students"><i class="bi bi-list-ul"></i> Liste des Étudiants</a></li>
+            <li><a class="dropdown-item" routerLink="/new-student"><i class="bi bi-person-plus"></i> Ajouter un Étudiant</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- Bouton Logout -->
+      <ul class="navbar-nav">
+        <li>
+          <button class="btn btn-outline-light">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

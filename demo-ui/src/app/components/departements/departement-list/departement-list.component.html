@@ -1,0 +1,43 @@
+<div class="container mt-4">
+  <!-- Message d'erreur -->
+  <div class="alert alert-danger mt-2" role="alert" *ngIf="errorMsg.length">
+    <p class="p-0 m-0" *ngFor="let msg of errorMsg">{{msg}}</p>
+  </div>
+  <hr>
+
+  <!-- Carte avec tableau -->
+  <div class="card text-center">
+    <div class="card-header">
+      <h2>Liste des Départements</h2>
+
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered table-striped">
+          <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Département</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let departement of departementResponse; let index = index">
+            <th scope="row">{{ index + 1 }}</th>
+            <td>{{departement.name}}</td>
+            <td>
+              <!-- Boutons d'action avec espace entre eux -->
+              <a *ngIf="departement.id" (click)="deleteDepartement(departement.id)" class="btn btn-danger me-2">
+                <i class="bi bi-trash"></i>
+              </a>
+              <a [routerLink]="['/departements/update', departement.id]" class="btn btn-success ms-2">
+                <i class="bi bi-pencil"></i>
+              </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
