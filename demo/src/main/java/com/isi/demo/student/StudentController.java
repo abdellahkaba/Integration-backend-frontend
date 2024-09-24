@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,25 +19,28 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<Integer> addStudent(
-            @Valid @RequestBody StudentRequest request
+            @Valid @RequestBody StudentRequest request,
+            Authentication connectedUser
     ){
-        return ResponseEntity.ok(service.addStudent(request));
+        return ResponseEntity.ok(service.addStudent(request,connectedUser));
     }
     @GetMapping
-    public ResponseEntity<List<StudentResponse>> listAllStudent(){
-        return ResponseEntity.ok(service.listAllStudent());
+    public ResponseEntity<List<StudentResponse>> listAllStudent(Authentication connectedUser){
+        return ResponseEntity.ok(service.listAllStudent(connectedUser));
     }
     @GetMapping("/{student-id}")
     public ResponseEntity<StudentResponse> findStudentById(
-            @PathVariable("student-id") Integer studentId
+            @PathVariable("student-id") Integer studentId,
+            Authentication connectedUser
     ){
-        return ResponseEntity.ok(service.findStudentById(studentId));
+        return ResponseEntity.ok(service.findStudentById(studentId,connectedUser));
     }
 
     @PutMapping("/{student-id}")
     public ResponseEntity<Void> updateStudent(
             @PathVariable("student-id") Integer id,
-            @RequestBody @Valid UpdateStudentRequest request
+            @RequestBody @Valid UpdateStudentRequest request,
+            Authentication connectedUser
     ){
         request = new UpdateStudentRequest(
                 id,
@@ -44,24 +48,25 @@ public class StudentController {
                 request.email(),
                 request.departementId()
         );
-        service.updateStudent(request);
+        service.updateStudent(request,connectedUser);
         return ResponseEntity.accepted().build();
     }
 
     @DeleteMapping("/{student-id}")
     public ResponseEntity<Void> deleteStudent(
-            @PathVariable("student-id") Integer id
+            @PathVariable("student-id") Integer id,
+            Authentication connectedUser
     ){
-        service.deleteStudent(id);
+        service.deleteStudent(id,connectedUser);
         return ResponseEntity.accepted().build();
     }
 
     @PatchMapping("/{student-id}")
     public ResponseEntity<Void> updateStudent (
             @PathVariable("student-id") Integer studentId,
-            @Valid @RequestBody StudentRequest request
+            @Valid @RequestBody StudentRequest request, Authentication connectedUser
     ){
-        service.updateStudent(studentId,request);
+        service.updateStudent(studentId,request,connectedUser);
         return ResponseEntity.noContent().build();
     }
 }

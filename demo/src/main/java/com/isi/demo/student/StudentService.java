@@ -8,6 +8,7 @@ import com.isi.demo.exception.OperationNotPermittedException;
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class StudentService {
     private final StudentMapper mapper ;
 
 
-        public Integer addStudent(StudentRequest request) {
+        public Integer addStudent(StudentRequest request, Authentication connectedUser) {
             if (repository.findByEmail(request.email()).isPresent()){
                 throw new OperationNotPermittedException(BusinessErrorCodes.DUPLICATE_EMAIL.getDescription());
             }
@@ -34,19 +35,19 @@ public class StudentService {
             return student.getId();
         }
 
-    public List<StudentResponse> listAllStudent() {
+    public List<StudentResponse> listAllStudent(Authentication connectedUser) {
         return repository.findAll()
                 .stream()
                 .map(mapper::fromStudent)
                 .collect(Collectors.toList());
     }
-    public StudentResponse findStudentById(Integer studentId) {
+    public StudentResponse findStudentById(Integer studentId, Authentication connectedUser) {
         return repository.findById(studentId)
                 .map(mapper::fromStudent)
                 .orElseThrow(() -> new EntityNotFoundException(" L'Étudiant non trouvé !"));
     }
 
-    public void updateStudent(UpdateStudentRequest request) {
+    public void updateStudent(UpdateStudentRequest request, Authentication connectedUser) {
         var student = repository.findById(request.id())
                 .orElseThrow(() -> new EntityNotFoundException("L'Étudiant non trouvé !"));
         // si l'id de departement n'existe pas
@@ -75,13 +76,13 @@ public class StudentService {
         }
     }
 
-    public void deleteStudent(Integer id) {
+    public void deleteStudent(Integer id, Authentication connectedUser) {
         Student student = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Cet Etudiant n'existe pas avec ID : " + id));
         repository.delete(student);
     }
 
-    public void updateStudent(Integer id, StudentRequest request) {
+    public void updateStudent(Integer id, StudentRequest request, Authentication connectedUser) {
         Student student = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Etudiant non trouvé"));
 
