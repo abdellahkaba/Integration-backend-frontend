@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {KeycloakService} from "../../services/keycloak/keycloak.service";
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -9,16 +8,12 @@ import {KeycloakService} from "../../services/keycloak/keycloak.service";
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit{
-
   constructor(
     private key: KeycloakService
   ) {
   }
-
   async ngOnInit(): Promise<void> {
-
     await this.key.init()
     await this.key.login()
   }
-
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import Keycloak, {KeycloakInstance} from "keycloak-js";
 import {UserProfile} from "./user-profile";
 
@@ -14,8 +14,8 @@ export class KeycloakService {
     if (!this._keycloak){
       this._keycloak = new Keycloak({
         url: 'http://localhost:9090',
-        realm: 'demo-spring',
-        clientId: 'dmo'
+        realm: 'edu-system',
+        clientId: 'edu-sys'
       })
     }
     return this._keycloak

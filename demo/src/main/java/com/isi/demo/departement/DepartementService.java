@@ -7,7 +7,6 @@ import com.isi.demo.exception.OperationDepartementNotPermittedException;
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +20,7 @@ public class DepartementService {
     private final DepartementMapper mapper;
 
 
-    public Integer saveDepartement(DepartementRequest request, Authentication connectedUser) {
+    public Integer saveDepartement(DepartementRequest request) {
         if (repository.findByName(request.name()).isPresent()){
             throw new OperationDepartementNotPermittedException(BusinessErrorCodes.DUPLICATE_DEPARTMENT_NAME.getDescription());
         }
@@ -30,7 +29,7 @@ public class DepartementService {
     }
 
 
-    public void updateDepartement(UpdateDepartementRequest request, Authentication connectedUser) {
+    public void updateDepartement(UpdateDepartementRequest request) {
         var departement = repository.findById(request.id())
                 .orElseThrow(() -> new EntityNotFoundException(
                         String.format("Le Departement non trouvé ID:: %s", request.id())
@@ -50,13 +49,13 @@ public class DepartementService {
         }
     }
 
-    public DepartementResponse findDepartementById(Integer departementId, Authentication connectedUser) {
+    public DepartementResponse findDepartementById(Integer departementId) {
         return repository.findById(departementId)
                 .map(mapper::fromDepartement)
                 .orElseThrow(() -> new EntityNotFoundException("Aucune category avec ce ID:: " + departementId));
     }
 
-    public void deleteDepartement(Integer id, Authentication connectedUser) {
+    public void deleteDepartement(Integer id) {
         Departement departement = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Cet departement n'existe pas"));
 
@@ -67,14 +66,14 @@ public class DepartementService {
     }
 
 
-    public List<DepartementResponse> listAllDepartement(Authentication connectedUser) {
+    public List<DepartementResponse> listAllDepartement() {
         return repository.findAll()
                 .stream()
                 .map(mapper::fromDepartement)
                 .collect(Collectors.toList());
     }
 
-    public void update(Integer departementId, DepartementRequest request, Authentication connectedUser) {
+    public void update(Integer departementId, DepartementRequest request) {
         Departement departement = repository.findById(departementId)
                 .orElseThrow(() -> new EntityNotFoundException("Departement non trouvé" ));
         if(StringUtils.isNotBlank(request.name())){

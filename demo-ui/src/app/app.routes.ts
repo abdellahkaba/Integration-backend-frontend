@@ -6,35 +6,48 @@ import {StudentListComponent} from "./components/students/student-list/student-l
 import {NewStudentComponent} from "./components/students/new-student/new-student.component";
 import {UpdateDepartementComponent} from "./components/departements/update-departement/update-departement.component";
 import {UpdateStudentComponent} from "./components/students/update-student/update-student.component";
+import {authGuard} from "./services/guard/auth.guard";
+import {LoginComponent} from "./pages/login/login.component";
 
 export const routes: Routes = [
   {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
     path: '',
     component: MainComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: 'departements',
-        component: DepartementListComponent
+        component: DepartementListComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'new-departement',
-        component: NewDepartementComponent
+        component: NewDepartementComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'students',
-        component: StudentListComponent
+        component: StudentListComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'new-student',
-        component: NewStudentComponent
+        component: NewStudentComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'departements/update/:departement-id',
-        component: UpdateDepartementComponent
+        component: UpdateDepartementComponent,
+         canActivate: [authGuard],
       },
       {
         path: 'students/update/:student-id',
-        component: UpdateStudentComponent
+        component: UpdateStudentComponent,
+        canActivate: [authGuard],
       }
     ]
   }

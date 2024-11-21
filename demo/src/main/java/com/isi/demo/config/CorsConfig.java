@@ -15,7 +15,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Permettre à toutes les routes
-                        .allowedOrigins("http://localhost:8080") // Frontend Angular (port par défaut)
+                        .allowedOrigins("http://localhost:4200") // Frontend Angular (port par défaut)
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Méthodes autorisées
                         .allowedHeaders("*") // Autoriser tous les en-têtes
                         .allowCredentials(true); // Autoriser l'envoi des cookies ou des identifiants

@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RouterLink} from "@angular/router";
+import {KeycloakService} from "../../services/keycloak/keycloak.service";
+
 
 @Component({
   selector: 'app-menu',
@@ -10,6 +12,18 @@ import {RouterLink} from "@angular/router";
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit{
 
+  constructor(
+     private keycloakService: KeycloakService
+  ) {
+  }
+
+  ngOnInit() {
+
+  }
+
+  async logout() {
+     await this.keycloakService.logout();
+  }
 }
