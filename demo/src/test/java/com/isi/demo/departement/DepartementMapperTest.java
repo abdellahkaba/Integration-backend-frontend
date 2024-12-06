@@ -1,10 +1,18 @@
 package com.isi.demo.departement;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 class DepartementMapperTest {
+
+    @BeforeAll
+    static void beforeAll() {
+        System.out.println("Inside Before All method");
+    }
+
+    @AfterAll
+    static void afterAll() {
+        System.out.println("Inside After All method");
+    }
 
     @BeforeEach
     void setUp(){
