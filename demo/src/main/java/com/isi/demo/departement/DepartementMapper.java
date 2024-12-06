@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DepartementMapper {
+
     public Departement toDepartement(DepartementRequest request) {
         if (request == null){
             return null ;
