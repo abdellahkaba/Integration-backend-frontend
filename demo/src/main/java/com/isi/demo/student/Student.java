@@ -20,4 +20,6 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "departement_id")
     private Departement departement;
+
+
 }

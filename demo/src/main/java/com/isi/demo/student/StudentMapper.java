@@ -25,4 +25,6 @@ public class StudentMapper {
                 .departementName(student.getDepartement() != null ? student.getDepartement().getName(): null)
                 .build();
     }
+
+
 }

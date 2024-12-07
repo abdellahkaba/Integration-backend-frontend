@@ -1,34 +1,51 @@
 package com.isi.demo.departement;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class DepartementMapperTest {
 
-    @BeforeAll
-    static void beforeAll() {
-        System.out.println("Inside Before All method");
-    }
-
-    @AfterAll
-    static void afterAll() {
-        System.out.println("Inside After All method");
-    }
+    private DepartementMapper mapper;
 
     @BeforeEach
-    void setUp(){
-        System.out.println("Inside the before each method");
-    }
-    @AfterEach
-    void tearDown(){
-        System.out.println("Inside the after each method");
-    }
-    @Test
-    public void test1(){
-        System.out.println("My first test method");
-    }
-    @Test
-    public void test2(){
-        System.out.println("My second test method");
+    void setUp() {
+        mapper = new DepartementMapper();
     }
 
+    @Test
+    public void shouldMapDepartementRequestToDepartement() {
+        // Given
+        DepartementRequest request = new DepartementRequest(
+                1,      // ID du département
+                "Physical" // Nom du département
+        );
+
+        // When
+        Departement departement = mapper.toDepartement(request);
+
+        // Then
+        assertNotNull(departement); // Vérifie que l'objet n'est pas null
+        assertEquals(request.id(), departement.getId());
+        assertEquals(request.name(), departement.getName());
+    }
+
+    @Test
+    public void shouldMapDepartementToDepartementResponse() {
+        // Given
+        Departement departement = new Departement(
+                1,      // ID du département
+                "Physical" // Nom du département
+        );
+
+        // When
+        DepartementResponse response = mapper.fromDepartement(departement);
+
+        // Then
+        assertNotNull(response); // Vérifie que la réponse n'est pas null
+        assertEquals(departement.getId(), response.getId());
+        assertEquals(departement.getName(), response.getName());
+    }
 }
