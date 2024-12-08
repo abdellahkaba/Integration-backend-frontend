@@ -7,7 +7,8 @@ public class DepartementMapper {
 
     public Departement toDepartement(DepartementRequest request) {
         if (request == null){
-            return null ;
+            throw new NullPointerException("Cet departement ne doit pas etre null");
+           // return null;
         }
         return Departement.builder()
                 .id(request.id())

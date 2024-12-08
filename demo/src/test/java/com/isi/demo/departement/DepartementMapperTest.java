@@ -3,8 +3,7 @@ package com.isi.demo.departement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class DepartementMapperTest {
 
@@ -30,6 +29,11 @@ class DepartementMapperTest {
         assertNotNull(departement); // Vérifie que l'objet n'est pas null
         assertEquals(request.id(), departement.getId());
         assertEquals(request.name(), departement.getName());
+    }
+
+    @Test
+    public void should_map_departementRequest_to_departement_when_departementRequest_is_null(){
+        assertThrows(NullPointerException.class, () -> mapper.toDepartement(null));
     }
 
     @Test
