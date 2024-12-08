@@ -9,8 +9,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class DepartementServiceTest {
 
@@ -32,27 +31,32 @@ class DepartementServiceTest {
 
     @Test
     public void should_successfully_create_departement() {
-        // Given
+        // Given ou Arrange
         DepartementRequest request = new DepartementRequest(
                 1,
                 "Physical"
         );
         Departement departement = new Departement(
-                1,
+                2,
                 "Physical"
         );
 
         // Simuler le comportement des méthodes du repository et du mapper
+
+        // Quand la méthode toDepartement de l'objet mocké departementMapper est appelée avec l'argument request,
+        // retourne immédiatement l'objet departement, sans exécuter la logique réelle de toDepartement.
         when(departementRepository.findByName(request.name())).thenReturn(Optional.empty()); // Aucun département avec ce nom
         when(departementMapper.toDepartement(request)).thenReturn(departement); // Mapper correctement
         when(departementRepository.save(departement)).thenReturn(departement); // Sauvegarde du département
 
-        // When
+        // When // Action
         Integer response = departementService.saveDepartement(request);
 
-        // Then
-        assertEquals(departement.getId(), response); // Vérifie que l'ID retourné correspond
+        // Then ou Assert
+        // assertEquals compare deux valeurs (expect: valeur attendue et actual: valeur réelle)
+        assertEquals(departement.getId(), response); // Vérifie que ID retourné correspond
         verify(departementRepository).findByName(request.name()); // Vérifie que findByName a été appelé
+        verify(departementMapper,times(1)).toDepartement(request);
         verify(departementRepository).save(departement);          // Vérifie que save a été appelé
     }
 

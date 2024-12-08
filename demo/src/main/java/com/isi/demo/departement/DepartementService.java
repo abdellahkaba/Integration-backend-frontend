@@ -19,7 +19,6 @@ public class DepartementService {
     private final DepartementRepository repository;
     private final DepartementMapper mapper;
 
-
     public Integer saveDepartement(DepartementRequest request) {
         if (repository.findByName(request.name()).isPresent()){
             throw new OperationDepartementNotPermittedException(BusinessErrorCodes.DUPLICATE_DEPARTMENT_NAME.getDescription());

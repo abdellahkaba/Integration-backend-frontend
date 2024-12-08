@@ -22,17 +22,17 @@ public class StudentService {
     private final StudentMapper mapper ;
 
 
-        public Integer addStudent(StudentRequest request) {
-            if (repository.findByEmail(request.email()).isPresent()){
-                throw new OperationNotPermittedException(BusinessErrorCodes.DUPLICATE_EMAIL.getDescription());
-            }
-            var departement = departementRepository.findById(request.departementId())
-                    .orElseThrow(() -> new EntityNotFoundException("Departement non trouvé"));
-            var student = mapper.toStudent(request);
-            student.setDepartement(departement);
-            student = repository.save(student);
-            return student.getId();
+    public Integer addStudent(StudentRequest request) {
+        if (repository.findByEmail(request.email()).isPresent()) {
+            throw new OperationNotPermittedException(BusinessErrorCodes.DUPLICATE_EMAIL.getDescription());
         }
+        var departement = departementRepository.findById(request.departementId())
+                .orElseThrow(() -> new EntityNotFoundException("Departement non trouvé"));
+        var student = mapper.toStudent(request);
+        student.setDepartement(departement);
+        student = repository.save(student);
+        return student.getId();
+    }
 
     public List<StudentResponse> listAllStudent() {
         return repository.findAll()
