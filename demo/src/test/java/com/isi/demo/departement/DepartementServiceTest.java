@@ -60,4 +60,28 @@ class DepartementServiceTest {
         verify(departementRepository).save(departement);          // Vérifie que save a été appelé
     }
 
+    @Test
+    public void should_update_departement_successfully() {
+        // Given
+        Integer departementId = 1;
+        UpdateDepartementRequest request = new UpdateDepartementRequest(
+                departementId,
+                "Informatique"
+        );
+        Departement existingDepartement = new Departement(departementId, "Science");
+
+        when(departementRepository.findById(departementId)).thenReturn(Optional.of(existingDepartement));
+        when(departementRepository.findByName(request.name())).thenReturn(Optional.empty());
+
+        // When
+        departementService.updateDepartement(request);
+
+        // Then
+        assertEquals("Informatique", existingDepartement.getName()); // Vérifie que le nom a été mis à jour
+        verify(departementRepository, times(1)).findById(departementId);
+        verify(departementRepository, times(1)).findByName(request.name());
+        verify(departementRepository, times(1)).save(existingDepartement);
+    }
+
+
 }
