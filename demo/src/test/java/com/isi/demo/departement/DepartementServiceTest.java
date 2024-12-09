@@ -1,5 +1,6 @@
 package com.isi.demo.departement;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -82,6 +83,29 @@ class DepartementServiceTest {
         verify(departementRepository, times(1)).findByName(request.name());
         verify(departementRepository, times(1)).save(existingDepartement);
     }
+
+    @Test
+    public void should_throw_exception_when_departement_not_found() {
+        // Given
+        Integer departementId = 99;
+        UpdateDepartementRequest request = new UpdateDepartementRequest(
+                departementId,
+                "Informatique"
+        );
+
+        when(departementRepository.findById(departementId)).thenReturn(Optional.empty());
+
+        // When & Then
+        EntityNotFoundException exception = assertThrows(
+                EntityNotFoundException.class,
+                () -> departementService.updateDepartement(request)
+        );
+
+        assertEquals("Le Departement non trouvé ID:: 99", exception.getMessage());
+        verify(departementRepository, times(1)).findById(departementId);
+        verifyNoMoreInteractions(departementRepository); // Pas d'autres interactions avec le repository
+    }
+
 
 
 }
